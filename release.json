@@ -1,0 +1,14 @@
+{
+  "version": "0.1.0-alpha.1",
+  "channel": "alpha",
+  "publishedAt": "2026-08-13",
+  "platform": "macOS",
+  "architecture": "arm64",
+  "minimumOS": "13.0",
+  "assetName": "Mosaic-0.1.0-alpha.1-arm64.dmg",
+  "fileSize": 125102226,
+  "downloadUrl": "https://github.com/Mattxx10/mosaic-releases/releases/download/v0.1.0-alpha.1/Mosaic-0.1.0-alpha.1-arm64.dmg",
+  "sha256": "b043ce737044c0dc5ea05db4f947bad9b1517cc9a1673207a4e5a81375466f4e",
+  "signed": false,
+  "releaseNotesUrl": "https://github.com/Mattxx10/mosaic-releases/releases/tag/v0.1.0-alpha.1"
+}

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" role="img" aria-labelledby="title description">
+  <title id="title">Mosaic logo</title>
+  <desc id="description">A colorful geometric M symbol followed by the Mosaic wordmark.</desc>
+  <defs>
+    <linearGradient id="tileA" x1="26" y1="32" x2="65" y2="208" gradientUnits="userSpaceOnUse"><stop stop-color="#A78BFA"/><stop offset="1" stop-color="#6D5DFB"/></linearGradient>
+    <linearGradient id="tileB" x1="73" y1="32" x2="120" y2="140" gradientUnits="userSpaceOnUse"><stop stop-color="#F472B6"/><stop offset="1" stop-color="#7C3AED"/></linearGradient>
+    <linearGradient id="tileC" x1="167" y1="32" x2="120" y2="140" gradientUnits="userSpaceOnUse"><stop stop-color="#38BDF8"/><stop offset="1" stop-color="#6366F1"/></linearGradient>
+    <linearGradient id="tileD" x1="214" y1="32" x2="175" y2="208" gradientUnits="userSpaceOnUse"><stop stop-color="#5EEAD4"/><stop offset="1" stop-color="#10B981"/></linearGradient>
+  </defs>
+  <g stroke="#FFFFFF" stroke-opacity=".18" stroke-width="2.5" stroke-linejoin="round">
+    <rect x="22" y="30" width="42" height="180" rx="14" fill="url(#tileA)"/>
+    <path d="M73 43c0-11 13-17 21-9l26 24v73c0 11-13 17-21 9l-21-21a16 16 0 0 1-5-11V43Z" fill="url(#tileB)"/>
+    <path d="M167 43c0-11-13-17-21-9l-26 24v73c0 11 13 17 21 9l21-21a16 16 0 0 0 5-11V43Z" fill="url(#tileC)"/>
+    <rect x="176" y="30" width="42" height="180" rx="14" fill="url(#tileD)"/>
+  </g>
+  <text x="270" y="166" fill="#171A21" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="128" font-weight="720" letter-spacing="-5">Mosaic</text>
+</svg>
