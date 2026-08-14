@@ -2,9 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { DownloadDialog } from "@/components/download";
 import { formatFileSize, getReleaseManifest } from "@/lib/release";
+import { resolveSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mosaic-site.vercel.app";
+const siteUrl = resolveSiteUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

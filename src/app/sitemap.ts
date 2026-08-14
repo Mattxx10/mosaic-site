@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
+import { resolveSiteUrl } from "@/lib/site-url";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mosaic-site.vercel.app";
+  const base = resolveSiteUrl();
   const lastModified = new Date("2026-08-13T00:00:00Z");
   return [
     { url: base, lastModified, changeFrequency: "weekly", priority: 1 },
