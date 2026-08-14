@@ -5,17 +5,32 @@ import { expect, test } from "@playwright/test";
 const axePath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../node_modules/axe-core/axe.min.js");
 
 test("has no automatically detectable serious accessibility violations", async ({ page }) => {
-  await page.goto("/");
-  await page.addScriptTag({ path: axePath });
-  const violations = await page.evaluate(async () => {
-    const result = await (window as typeof window & { axe: { run: () => Promise<{ violations: Array<{ impact: string | null; id: string }> }> } }).axe.run();
-    return result.violations.filter((violation) => violation.impact === "critical" || violation.impact === "serious");
-  });
-  const summary = violations.map((violation) => ({
-    id: violation.id,
-    nodes: (violation as { nodes?: Array<{ target?: string[] }> }).nodes?.map((node) => node.target),
-  }));
-  expect(violations, JSON.stringify(summary, null, 2)).toHaveLength(0);
+  async function expectNoSeriousViolations(context: string) {
+    const violations = await page.evaluate(async () => {
+      const result = await (window as typeof window & { axe: { run: () => Promise<{ violations: Array<{ impact: string | null; id: string }> }> } }).axe.run();
+      return result.violations.filter((violation) => violation.impact === "critical" || violation.impact === "serious");
+    });
+    const summary = violations.map((violation) => ({
+      id: violation.id,
+      nodes: (violation as { nodes?: Array<{ target?: string[] }> }).nodes?.map((node) => node.target),
+    }));
+    expect(violations, `${context}: ${JSON.stringify(summary, null, 2)}`).toHaveLength(0);
+  }
+
+  for (const colorScheme of ["light", "dark"] as const) {
+    await page.emulateMedia({ colorScheme });
+    await page.goto("/");
+    await page.addScriptTag({ path: axePath });
+    await expectNoSeriousViolations(`${colorScheme} homepage`);
+
+    await page.getByTestId("download-trigger-hero").click();
+    await expectNoSeriousViolations(`${colorScheme} download dialog`);
+    await page.keyboard.press("Escape");
+
+    await page.goto("/privacy");
+    await page.addScriptTag({ path: axePath });
+    await expectNoSeriousViolations(`${colorScheme} legal page`);
+  }
 });
 
 test("keeps visible text at the Mosaic readability floor", async ({ page }) => {
@@ -67,13 +82,16 @@ test("keeps visible text at the Mosaic readability floor", async ({ page }) => {
     );
   }
 
-  await page.goto("/");
-  expect(await findUndersizedText("homepage")).toEqual([]);
+  for (const colorScheme of ["light", "dark"] as const) {
+    await page.emulateMedia({ colorScheme });
+    await page.goto("/");
+    expect(await findUndersizedText(`${colorScheme} homepage`)).toEqual([]);
 
-  await page.getByTestId("download-trigger-hero").click();
-  expect(await findUndersizedText("download dialog")).toEqual([]);
-  await page.keyboard.press("Escape");
+    await page.getByTestId("download-trigger-hero").click();
+    expect(await findUndersizedText(`${colorScheme} download dialog`)).toEqual([]);
+    await page.keyboard.press("Escape");
 
-  await page.goto("/privacy");
-  expect(await findUndersizedText("legal pages")).toEqual([]);
+    await page.goto("/privacy");
+    expect(await findUndersizedText(`${colorScheme} legal pages`)).toEqual([]);
+  }
 });
